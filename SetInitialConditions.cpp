@@ -1,4 +1,4 @@
-#include "ReactionDiffusion.h";
+#include "ReactionDiffusion.h"
 
 // Method to set initial conditions
 void ReactionDiffusion::SetInitialConditions() {
@@ -20,9 +20,9 @@ void ReactionDiffusion::SetInitialConditions() {
     for (int j = 0; j < Ny; ++j) {
         for (int i = 0; i < Nx; ++i) {
             if (i < double(Nx-1)/2) {
-                u[Nx*j + i] = a/2;
+                v[Nx*j + i] = a/2;
             } else {
-                u[Nx*j + i] = 0.0;
+                v[Nx*j + i] = 0.0;
             }
         }
     }
