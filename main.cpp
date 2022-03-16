@@ -16,14 +16,14 @@ int main(int argc, char* argv[]) {
     // Parse command line
     int error = ProcessArgs(rank, argc, argv, dt, T, Nx, Ny, a, b, mu1, mu2, eps);
 
-    if (error = 1) {
+    if (error == 1) {
         MPI_Finalize();
         return 0;
     }
-    
+
     ReactionDiffusion my_prob;
 
-    my_prob.SetParameters(0.001,100.0,101,101,0.75,0.06,5.0,0.0,50.0);
+    my_prob.SetParameters(dt,T,Nx,Ny,a,b,mu1,mu2,eps);
 
     my_prob.SetInitialConditions();
 
