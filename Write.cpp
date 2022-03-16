@@ -5,7 +5,7 @@
 
 // Method to export data
 void ReactionDiffusion::Write() {
-    std::ofstream vOut("data.txt", std::ios::out | std::ios::trunc);
+    std::ofstream vOut("output.txt", std::ios::out | std::ios::trunc);
     vOut.precision(5);
 
     for (int j = 0; j < Ny; ++j) {
