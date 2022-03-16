@@ -1,4 +1,4 @@
-#include "ReactionDiffusion.h";
+#include "ReactionDiffusion.h"
 
 // Method to set parameters
 void ReactionDiffusion::SetParameters(double dt, double T, int Nx, int Ny, double a, double b, double mu1, double mu2, double eps) {
