@@ -35,8 +35,8 @@ int ProcessArgs(int &rank, int &argc, char* argv[], double &dt, double &T, int &
         if (rank == 0) {
             std::cout << "Error: " << e.what() << std::endl;
             std::cout << description << std::endl;
+            return 1;
         }
-        return 1;
     }
 
     return 0;
