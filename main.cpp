@@ -1,3 +1,5 @@
+#include <mpi.h>
+
 #include "ReactionDiffusion.h"
 #include "ProcessArgs.h"
 
