@@ -11,11 +11,13 @@ class ReactionDiffusion {
         double a, b, mu1, mu2, eps;
         double lambda1, lambda2;
 
-        double* u, v;
-        double* A, B;
+        double* u, *v;
+        double* A, *B;
 
+    public:
         // Methods
         void SetParameters(double, double, int, int, double, double, double, double, double);
         void SetInitialConditions();
         void TimeIntegrate();
+        void Write();
 };
