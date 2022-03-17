@@ -14,9 +14,11 @@ SetParameters.o: SetParameters.cpp
 
 SetInitialConditions.o: SetInitialConditions.cpp
 
+Initialise.o: Initialise.cpp
+
 Write.o: Write.cpp
 
-main: main.o ProcessArgs.o SetParameters.o SetInitialConditions.o Write.o
+main: main.o ProcessArgs.o SetParameters.o SetInitialConditions.o Initialise.o Write.o
 
 clean: 
 	rm -rf *.o
