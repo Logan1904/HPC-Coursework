@@ -5,7 +5,7 @@ void ReactionDiffusion::SetParameters(double dt, double T, int Nx, int Ny, doubl
     this->dt = dt;
     this->T = T;
 
-    Nt = (int) T / dt;
+    Nt = int(T/dt);
     
     this->Nx = Nx;
     this->Ny = Ny;
