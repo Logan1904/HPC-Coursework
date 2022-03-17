@@ -29,6 +29,8 @@ int main(int argc, char* argv[]) {
 
     my_prob.SetInitialConditions();
 
+    my_prob.Initialise(rank, size);
+
     my_prob.Write();
 
     MPI_Finalize();
