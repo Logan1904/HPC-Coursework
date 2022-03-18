@@ -2,7 +2,9 @@
 
 CC = mpicxx
 CXX = mpicxx
+CXXFLAGS = -Wall -g
 LDLIBS = -lboost_program_options -lblas
+LDFLAGS = -g
 
 default: main
 
