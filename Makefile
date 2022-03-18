@@ -2,7 +2,7 @@
 
 CC = mpicxx
 CXX = mpicxx
-LDLIBS = -lboost_program_options
+LDLIBS = -lboost_program_options -lblas
 
 default: main
 
@@ -16,9 +16,11 @@ SetInitialConditions.o: SetInitialConditions.cpp
 
 Initialise.o: Initialise.cpp
 
+TimeIntegrate.o: TimeIntegrate.cpp
+
 Write.o: Write.cpp
 
-main: main.o ProcessArgs.o SetParameters.o SetInitialConditions.o Initialise.o Write.o
+main: main.o ProcessArgs.o SetParameters.o SetInitialConditions.o Initialise.o TimeIntegrate.cpp Write.o
 
 clean: 
 	rm -rf *.o
