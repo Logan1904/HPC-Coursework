@@ -1,7 +1,7 @@
 .PHONY: clean
 
-CC = mpicxx
-CXX = mpicxx
+CC = g++
+CXX = g++
 CXXFLAGS = -Wall -g
 LDLIBS = -lboost_program_options -lblas
 LDFLAGS = -g
@@ -18,11 +18,10 @@ SetInitialConditions.o: SetInitialConditions.cpp
 
 Initialise.o: Initialise.cpp
 
-TimeIntegrate.o: TimeIntegrate.cpp
 
 Write.o: Write.cpp
 
-main: main.o ProcessArgs.o SetParameters.o SetInitialConditions.o Initialise.o TimeIntegrate.cpp Write.o
+main: main.o ProcessArgs.o SetParameters.o SetInitialConditions.o Initialise.o Write.o
 
 clean: 
 	rm -rf *.o

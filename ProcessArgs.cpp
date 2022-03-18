@@ -2,7 +2,7 @@
 
 namespace po = boost::program_options;
 
-int ProcessArgs(int &rank, int &argc, char* argv[], double &dt, double &T, int &Nx, int &Ny, double &a, double &b, double &mu1, double &mu2, double &eps) {
+int ProcessArgs(int &argc, char* argv[], double &dt, double &T, int &Nx, int &Ny, double &a, double &b, double &mu1, double &mu2, double &eps) {
     // Parse command line
     po::options_description description("Parameters");
     
@@ -22,9 +22,7 @@ int ProcessArgs(int &rank, int &argc, char* argv[], double &dt, double &T, int &
     po::store(po::parse_command_line(argc, argv, description), vm);
 
     if (vm.count("help")) {
-        if (rank == 0) {
-            std::cout << description;
-        }
+        std::cout << description;
         return 1;
     }
 
@@ -32,10 +30,8 @@ int ProcessArgs(int &rank, int &argc, char* argv[], double &dt, double &T, int &
     try {
         po::notify(vm);
     } catch (std::exception& e) {
-        if (rank == 0) {
-            std::cout << "Error: " << e.what() << std::endl;
-            std::cout << description << std::endl;
-        }
+        std::cout << "Error: " << e.what() << std::endl;
+        std::cout << description << std::endl;
         return 1;
     }
 
