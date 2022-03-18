@@ -31,7 +31,11 @@ int main(int argc, char* argv[]) {
 
     my_prob.Initialise(rank, size);
 
-    my_prob.Write();
+    my_prob.TimeIntegrate(rank, size);
+
+    if (rank == 0) {
+        my_prob.Write();
+    }
 
     MPI_Finalize();
 }
