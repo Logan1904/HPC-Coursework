@@ -19,6 +19,6 @@ class ReactionDiffusion {
         void SetParameters(double, double, int, int, double, double, double, double, double);
         void SetInitialConditions();
         void Initialise();
-        void TimeIntegrate(int, int);
+        void TimeIntegrate();
         void Write();
 };

@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 
     my_prob.Initialise();
 
-    //my_prob.TimeIntegrate(rank, size);
+    my_prob.TimeIntegrate();
 
     //my_prob.Write();
 }
