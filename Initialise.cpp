@@ -1,9 +1,5 @@
 #include "ReactionDiffusion.h"
 
-#include <iostream>
-#include <iomanip>
-#include <mpi.h>
-
 // Method to initialise A and B matrix
 void ReactionDiffusion::Initialise(int rank, int size) {
     // First (size-X) processes compute Y rows
