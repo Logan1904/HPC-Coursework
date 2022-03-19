@@ -2,9 +2,9 @@
 
 CC = g++
 CXX = g++
-CXXFLAGS = -Wall -g
-LDLIBS = -lboost_program_options -lblas
-LDFLAGS = -g
+CXXFLAGS = -Wall -g -fopenmp
+LDLIBS = -lboost_program_options
+LDFLAGS = -g -fopenmp
 
 default: main
 
@@ -18,10 +18,11 @@ SetInitialConditions.o: SetInitialConditions.cpp
 
 Initialise.o: Initialise.cpp
 
+TimeIntegrate.o: TimeIntegrate.cpp
 
 Write.o: Write.cpp
 
-main: main.o ProcessArgs.o SetParameters.o SetInitialConditions.o Initialise.o Write.o
+main: main.o ProcessArgs.o SetParameters.o SetInitialConditions.o Initialise.o TimeIntegrate.o Write.o
 
 clean: 
 	rm -rf *.o
