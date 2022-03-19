@@ -24,5 +24,5 @@ int main(int argc, char* argv[]) {
 
     my_prob.TimeIntegrate();
 
-    //my_prob.Write();
+    my_prob.Write();
 }
