@@ -3,7 +3,7 @@
 CC = g++
 CXX = g++
 CXXFLAGS = -Wall -g -fopenmp
-LDLIBS = -lboost_program_options
+LDLIBS = -lboost_program_options -lblas
 LDFLAGS = -g -fopenmp
 
 default: main

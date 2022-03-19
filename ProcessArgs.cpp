@@ -2,12 +2,13 @@
 
 namespace po = boost::program_options;
 
-int ProcessArgs(int &argc, char* argv[], double &dt, double &T, int &Nx, int &Ny, double &a, double &b, double &mu1, double &mu2, double &eps) {
+int ProcessArgs(int &argc, char* argv[], double &dt, double &T, int &Nx, int &Ny, double &a, double &b, double &mu1, double &mu2, double &eps, int &np) {
     // Parse command line
     po::options_description description("Parameters");
     
     description.add_options()
         ("help", "produce help message")
+        ("np", po::value<int>(&np)->required(), "Number of threads")
         ("dt", po::value<double>(&dt)->required(), "Time-step to use")
         ("T", po::value<double>(&T)->required(), "Total integration time")
         ("Nx", po::value<int>(&Nx)->required(), "Number of grid points in x")

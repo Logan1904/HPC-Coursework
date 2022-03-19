@@ -5,10 +5,10 @@ int main(int argc, char* argv[]) {
 
     // Declare parameter variables
     double dt, T, a, b, mu1, mu2, eps;
-    int Nx, Ny;
+    int Nx, Ny, np;
 
     // Parse command line
-    int error = ProcessArgs(argc, argv, dt, T, Nx, Ny, a, b, mu1, mu2, eps);
+    int error = ProcessArgs(argc, argv, dt, T, Nx, Ny, a, b, mu1, mu2, eps, np);
 
     if (error == 1) {
         return 0;
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 
     my_prob.Initialise();
 
-    my_prob.TimeIntegrate();
+    my_prob.TimeIntegrate(np);
 
     my_prob.Write();
 }
