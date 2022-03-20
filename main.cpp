@@ -20,9 +20,7 @@ int main(int argc, char* argv[]) {
 
     my_prob.SetInitialConditions();
     
-    my_prob.Initialise();
-     
-    my_prob.TimeIntegrate(np);
+    my_prob.TimeIntegrate();
     
     my_prob.Write();
 }

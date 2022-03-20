@@ -1,16 +1,20 @@
 #include "ReactionDiffusion.h"
 
-#include <iostream>
-#include <iomanip>
+/**
+ * @brief Method to initialise our A and B matrices
+ *        A matrix defined as: u[n+1] = A*u[n] + f1(u[n],v[n])
+ *        B matrix defined as: v[n+1] = B*v[n] + f2(u[n],v[n])
+ *        A and B matrices are symmetric, and hence created in the Column-Major, Upper Band, Packed storage form
+ */
 
-// Method to initialise A and B matrix
 void ReactionDiffusion::Initialise() {
     int length_col = Nx+1;
     int length_block = Nx*length_col;
+
     #pragma omp parallel 
     {
         #pragma omp for collapse(2)
-        
+
             for (int block = 0; block < Ny; ++block) {
                 for (int i = 0; i < Nx; ++i) {
                     A[length_col*i + length_block*block + 0] = lambda1;

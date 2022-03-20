@@ -2,6 +2,24 @@
 
 namespace po = boost::program_options;
 
+/**
+ * @brief Function to parse command-line inputs to our parameter variables
+ * 
+ * @param argc Integer value of the number of command line arguments
+ * @param argv Pointer array of the command line arguments
+ * @param dt Time-step
+ * @param T Total integration time
+ * @param Nx Number of grid points in x
+ * @param Ny Number of grid points in y
+ * @param a Value of parameter a
+ * @param b Value of parameter b
+ * @param mu1 Value of parameter mu1
+ * @param mu2 Value of parameter mu2
+ * @param eps Value of parameter epsilon
+ * @param np Number of threads to use with OpenMP
+ * 
+ * @return int If 'help' argument specified, or missing an argument, function returns 1. Otherwise, returns 1
+ */
 int ProcessArgs(int &argc, char* argv[], double &dt, double &T, int &Nx, int &Ny, double &a, double &b, double &mu1, double &mu2, double &eps, int &np) {
     // Parse command line
     po::options_description description("Parameters");

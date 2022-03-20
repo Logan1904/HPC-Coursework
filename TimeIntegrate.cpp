@@ -1,10 +1,13 @@
 #include "ReactionDiffusion.h"
 
-#include <iostream>
 #include <cblas.h>
 
+/**
+ * @brief Method to integrate our Reaction-Diffusion PDE
+ */
+
 // Method to initialise A and B matrix
-void ReactionDiffusion::TimeIntegrate(int np) {
+void ReactionDiffusion::TimeIntegrate() {
     int t = 0;
     while (t < Nt) {
         double* utmp = new double[Nx*Ny];
@@ -39,12 +42,9 @@ void ReactionDiffusion::TimeIntegrate(int np) {
 
                 #pragma omp task
                 ++t;
-
-                #pragma omp task
-                std::cout << t << std::endl;
             }
         }
-        
+
         delete[] utmp;
         delete[] vtmp;
     }

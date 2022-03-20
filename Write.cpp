@@ -3,7 +3,11 @@
 #include <fstream>
 #include <iomanip>
 
-// Method to export data
+/**
+ * @brief Method to write our solution vectors 'u' and 'v' to the file 'output.txt'
+ * 
+ */
+
 void ReactionDiffusion::Write() {
     
     std::ofstream vOut("output.txt", std::ios::out | std::ios::trunc);

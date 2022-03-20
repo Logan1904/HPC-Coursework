@@ -1,11 +1,16 @@
 #include "ReactionDiffusion.h"
 
-// Method to set initial conditions
+/**
+ * @brief Method to set the initial conditions for our 'u' and 'v' vectors
+ *        Initial conditions defined as: u(x,y) = {1.0, if y>Ly/2}, {0.0, otherwise}
+ *                                       v(x,y) = {a/2, if x<Lx/2}, {0.0, otherwise}
+ */
+
 void ReactionDiffusion::SetInitialConditions() {
     #pragma omp parallel
     {
-        // Initial conditions for u
         #pragma omp for collapse(2)
+
             for (int j = 0; j < Ny; ++j) {
                 for (int i = 0; i < Nx; ++i) {
 
@@ -27,4 +32,6 @@ void ReactionDiffusion::SetInitialConditions() {
                 }
             }
     }
+
+    Initialise();
 }
