@@ -19,10 +19,10 @@ int main(int argc, char* argv[]) {
     my_prob.SetParameters(dt,T,Nx,Ny,a,b,mu1,mu2,eps);
 
     my_prob.SetInitialConditions();
-
+    
     my_prob.Initialise();
-
+     
     my_prob.TimeIntegrate(np);
-
+    
     my_prob.Write();
 }

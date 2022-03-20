@@ -5,36 +5,47 @@
 
 // Method to initialise A and B matrix
 void ReactionDiffusion::TimeIntegrate(int np) {
-
-    int length = Nx*Ny;
     int t = 0;
-    while (t<Nt) {
-        double* utmp = new double[Nx*Ny]();
-        double* vtmp = new double[Nx*Ny]();
+    while (t < Nt) {
+        double* utmp = new double[Nx*Ny];
+        double* vtmp = new double[Nx*Ny];
+        
+        #pragma omp parallel
+        {
+            #pragma omp single
+            {   
+                #pragma omp task
+                cblas_dsbmv(CblasColMajor, CblasUpper, Nx*Ny, Nx, 1.0, A, Nx+1, u, 1, 0.0, utmp, 1);
 
-        #pragma omp parallel for num_threads(np)
-            for (int row = 0; row < length; ++row) {
-                utmp[row] += dt*(eps*u[row]*(1.0-u[row])*(u[row] - (1/a)*(v[row]+b)));
-                vtmp[row] += dt*(u[row]*u[row]*u[row] - v[row]);
+                #pragma omp task
+                cblas_dsbmv(CblasColMajor, CblasUpper, Nx*Ny, Nx, 1.0, B, Nx+1, v, 1, 0.0, vtmp, 1);
+            }
+
+            // Compute u
+            #pragma omp for
+            for (int i = 0; i < Nx*Ny; ++i) {
+                utmp[i] += dt*(eps*u[i]*(1-u[i])*(u[i] - (1/a)*(v[i]+b)));
+                vtmp[i] += dt*(u[i]*u[i]*u[i] - v[i]);
             }
         
-        #pragma omp parallel for num_threads(np) collapse(2) 
-            for (int row = 0; row < length; ++row) {
-                for (int col = 0; col < length; ++col) {
-                    utmp[row] += A[row*length + col] * u[col];
-                    vtmp[row] += B[row*length + col] * v[col];
-                }
+            // Update u and v
+            #pragma omp single
+            {   
+                #pragma omp task
+                cblas_dcopy(Nx*Ny, utmp, 1, u, 1);
+
+                #pragma omp task
+                cblas_dcopy(Nx*Ny, vtmp, 1, v, 1);
+
+                #pragma omp task
+                ++t;
+
+                #pragma omp task
+                std::cout << t << std::endl;
             }
-
-        cblas_dcopy(length, utmp, 1, u, 1);
-        cblas_dcopy(length, vtmp, 1, v, 1);
-
-        ++t;
-
-        std::cout << t << std::endl;
-
+        }
+        
         delete[] utmp;
         delete[] vtmp;
     }
-
 }
