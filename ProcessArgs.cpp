@@ -20,12 +20,12 @@ namespace po = boost::program_options;
  * 
  * @return int If 'help' argument specified, or missing an argument, function returns 1. Otherwise, returns 1
  */
-int ProcessArgs(int &argc, char* argv[], double &dt, double &T, int &Nx, int &Ny, double &a, double &b, double &mu1, double &mu2, double &eps, int &np) {
+void ProcessArgs(int &argc, char* argv[], double &dt, double &T, int &Nx, int &Ny, double &a, double &b, double &mu1, double &mu2, double &eps, int &np) {
     // Parse command line
     po::options_description description("Parameters");
     
     description.add_options()
-        ("help", "produce help message")
+        ("help", "Produce this help message")
         ("np", po::value<int>(&np)->required(), "Number of threads")
         ("dt", po::value<double>(&dt)->required(), "Time-step to use")
         ("T", po::value<double>(&T)->required(), "Total integration time")
@@ -41,18 +41,17 @@ int ProcessArgs(int &argc, char* argv[], double &dt, double &T, int &Nx, int &Ny
     po::store(po::parse_command_line(argc, argv, description), vm);
 
     if (vm.count("help")) {
-        std::cout << description;
-        return 1;
+        std::cout << description << std::endl;
+        throw std::invalid_argument ("Help option specified");
     }
 
     // Check if all arguments provided
     try {
         po::notify(vm);
     } catch (std::exception& e) {
-        std::cout << "Error: " << e.what() << std::endl;
-        std::cout << description << std::endl;
-        return 1;
+        std::cout << "Error: " << e.what() << std::endl << std::endl;
+        std::cout << "Use argument --help to produce help message" << std::endl << std::endl;
+        throw std::invalid_argument ("Certain argument(s) not specified");
     }
 
-    return 0;
 }

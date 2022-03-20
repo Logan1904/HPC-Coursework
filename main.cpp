@@ -1,6 +1,8 @@
 #include "ReactionDiffusion.h"
 #include "ProcessArgs.h"
 
+#include <omp.h>
+
 int main(int argc, char* argv[]) {
 
     // Declare parameter variables
@@ -8,11 +10,14 @@ int main(int argc, char* argv[]) {
     int Nx, Ny, np;
 
     // Parse command line
-    int error = ProcessArgs(argc, argv, dt, T, Nx, Ny, a, b, mu1, mu2, eps, np);
-
-    if (error == 1) {
+    try {
+        ProcessArgs(argc, argv, dt, T, Nx, Ny, a, b, mu1, mu2, eps, np);
+    } catch (const std::invalid_argument& e) {
+        std::cout << "Program terminated: " << e.what() << std::endl;
         return 0;
     }
+
+    omp_set_num_threads(np);
 
     ReactionDiffusion my_prob;
 
