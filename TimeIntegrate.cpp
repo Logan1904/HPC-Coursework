@@ -26,10 +26,10 @@ void ReactionDiffusion::TimeIntegrate() {
 
             // Compute u
             #pragma omp for
-            for (int i = 0; i < Nx*Ny; ++i) {
-                utmp[i] += dt*(eps*u[i]*(1-u[i])*(u[i] - (1/a)*(v[i]+b)));
-                vtmp[i] += dt*(u[i]*u[i]*u[i] - v[i]);
-            }
+                for (int i = 0; i < Nx*Ny; ++i) {
+                    utmp[i] += dt*(eps*u[i]*(1-u[i])*(u[i] - (1/a)*(v[i]+b)));
+                    vtmp[i] += dt*(u[i]*u[i]*u[i] - v[i]);
+                }
         
             // Update u and v
             #pragma omp single
