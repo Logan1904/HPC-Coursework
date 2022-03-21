@@ -18,13 +18,13 @@ void ReactionDiffusion::TimeIntegrate() {
             #pragma omp single
             {   
                 #pragma omp task
-                cblas_dsbmv(CblasColMajor, CblasUpper, Nx*Ny, Nx, 1.0, A, Nx+1, u, 1, 0.0, utmp, 1); // Compute A*u{n}
+                cblas_dsbmv(CblasColMajor, CblasUpper, Nx*Ny, Nx, 1.0, A, Nx+1, u, 1, 0.0, utmp, 1); // Compute A*u[n]
 
                 #pragma omp task
-                cblas_dsbmv(CblasColMajor, CblasUpper, Nx*Ny, Nx, 1.0, B, Nx+1, v, 1, 0.0, vtmp, 1); // Compute B*v{n}
+                cblas_dsbmv(CblasColMajor, CblasUpper, Nx*Ny, Nx, 1.0, B, Nx+1, v, 1, 0.0, vtmp, 1); // Compute B*v[n]
             }
 
-            // Compute f1(u{n},v{n}) and f2(u{n},v{n})
+            // Compute f1(u[n],v[n]) and f2(u[n],v[n])
             #pragma omp for
                 for (int i = 0; i < Nx*Ny; ++i) {
                     utmp[i] += dt*(eps*u[i]*(1-u[i])*(u[i] - (1/a)*(v[i]+b)));
