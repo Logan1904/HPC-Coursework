@@ -31,7 +31,6 @@ void ReactionDiffusion::TimeIntegrate() {
                         utmp[i] += u[i+Nx]*A[(length)*2 + i];
                         vtmp[i] += v[i+Nx]*B[(length)*2 + i];
                     }
-
                 }
             
             #pragma omp for
@@ -48,8 +47,11 @@ void ReactionDiffusion::TimeIntegrate() {
             // Compute f1(u[n],v[n]) and f2(u[n],v[n])
             #pragma omp for
                 for (int k = 0; k < length; ++k) {
-                    utmp2[k] = dt*(eps*u[k]*(1-u[k])*(u[k] - (1/a)*(v[k]+b)));
-                    vtmp2[k] = dt*(u[k]*u[k]*u[k] - v[k]);
+                    double uval = u[k];
+                    double vval = v[k];
+
+                    utmp2[k] = dt*(eps*uval*(1-uval)*(uval - (1/a)*(vval+b)));
+                    vtmp2[k] = dt*(uval*uval*uval - vval);
                 }
 
             #pragma omp for
