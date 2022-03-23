@@ -8,53 +8,52 @@
 
 // Method to initialise A and B matrix
 void ReactionDiffusion::TimeIntegrate() {
+    int length = Nx*Ny;
     for (int t = 0; t < Nt; ++t) {
-        double* utmp = new double[Nx*Ny]();
-        double* vtmp = new double[Nx*Ny]();
-        double* utmp2 = new double[Nx*Ny]();
-        double* vtmp2 = new double[Nx*Ny]();
+        double* utmp = new double[length]();
+        double* vtmp = new double[length]();
+        double* utmp2 = new double[length]();
+        double* vtmp2 = new double[length]();
         
         #pragma omp parallel
         {
-            #pragma omp for schedule(static)
-                for (int i = 0; i < Nx*Ny; ++i) {
-                    utmp[i] += u[i]*A[(Nx*Ny)*0 + i];
-                    vtmp[i] += v[i]*B[(Nx*Ny)*0 + i];
+            #pragma omp for
+                for (int i = 0; i < length; ++i) {
+                    utmp[i] += u[i]*A[(length)*0 + i];
+                    vtmp[i] += v[i]*B[(length)*0 + i];
+
+                    if (i < length-1) {
+                        utmp[i] += u[i+1]*A[(length)*1 + i];
+                        vtmp[i] += v[i+1]*B[(length)*1 + i];
+                    }
+
+                    if (i < length-Nx) {
+                        utmp[i] += u[i+Nx]*A[(length)*2 + i];
+                        vtmp[i] += v[i+Nx]*B[(length)*2 + i];
+                    }
+
                 }
             
-            #pragma omp for schedule(static)
-                for (int i = 0; i < Nx*Ny-1; ++i) {
-                    utmp[i] += u[i+1]*A[(Nx*Ny)*1 + i];
-                    vtmp[i] += v[i+1]*B[(Nx*Ny)*1 + i];
-                }
+            #pragma omp for
+                for (int j = length-1; j>=1; --j) {
+                    utmp[j] += u[j-1]*A[(length)*1 + j-1];
+                    vtmp[j] += v[j-1]*B[(length)*1 + j-1];
 
-            #pragma omp for schedule(static)
-                for (int i = 0; i < Nx*Ny-Nx; ++i) {
-                    utmp[i] += u[i+Nx]*A[(Nx*Ny)*2 + i];
-                    vtmp[i] += v[i+Nx]*B[(Nx*Ny)*2 + i];
-                }
-            
-            #pragma omp for schedule(static)
-                for (int i = Nx*Ny-1; i>=1; --i) {
-                    utmp[i] += u[i-1]*A[(Nx*Ny)*1 + i-1];
-                    vtmp[i] += v[i-1]*B[(Nx*Ny)*1 + i-1];
-                }
-
-            #pragma omp for schedule(static)
-                for (int i = Nx*Ny-Nx; i>=Nx; --i) {
-                    utmp[i] += u[i-Nx]*A[(Nx*Ny)*2 + i-Nx];
-                    vtmp[i] += v[i-Nx]*B[(Nx*Ny)*2 + i-Nx];
+                    if (j >= Nx) {
+                        utmp[j] += u[j-Nx]*A[(length)*2 + j-Nx];
+                        vtmp[j] += v[j-Nx]*B[(length)*2 + j-Nx];
+                    }
                 }
 
             // Compute f1(u[n],v[n]) and f2(u[n],v[n])
-            #pragma omp for schedule(static)
-                for (int i = 0; i < Nx*Ny; ++i) {
-                    utmp2[i] = dt*(eps*u[i]*(1-u[i])*(u[i] - (1/a)*(v[i]+b)));
-                    vtmp2[i] = dt*(u[i]*u[i]*u[i] - v[i]);
+            #pragma omp for
+                for (int k = 0; k < length; ++k) {
+                    utmp2[k] = dt*(eps*u[k]*(1-u[k])*(u[k] - (1/a)*(v[k]+b)));
+                    vtmp2[k] = dt*(u[k]*u[k]*u[k] - v[k]);
                 }
 
-            #pragma omp for schedule(static)
-                for (int i = 0; i < Nx*Ny; ++i) {
+            #pragma omp for
+                for (int i = 0; i < length; ++i) {
                     u[i] = utmp[i] + utmp2[i];
                     v[i] = vtmp[i] + vtmp2[i];
                 }
