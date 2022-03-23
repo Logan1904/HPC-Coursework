@@ -10,7 +10,6 @@ void ReactionDiffusion::SetInitialConditions() {
     #pragma omp parallel
     {
         #pragma omp for collapse(2)
-
             for (int j = 0; j < Ny; ++j) {
                 for (int i = 0; i < Nx; ++i) {
 

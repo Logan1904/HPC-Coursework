@@ -10,50 +10,54 @@
 
 void ReactionDiffusion::Initialise() {
 
-    for (int block = 0; block < Ny; ++block) {
-        for (int i = 0; i < Nx; ++i) {
-            
-            if (i == Nx-1) {
-                A[(Nx*Ny)*1 + block*Nx + i] = 0.0;
-                B[(Nx*Ny)*1 + block*Nx + i] = 0.0;
-            } else {
-                A[(Nx*Ny)*1 + block*Nx + i] = lambda1;
-                B[(Nx*Ny)*1 + block*Nx + i] = lambda2;
-            }
-
-            if (block == 0 || block == Ny-1) {
-
-                if (block == Ny-1) {
-                    A[(Nx*Ny)*2 + block*Nx + i] = 0.0;
-                    B[(Nx*Ny)*2 + block*Nx + i] = 0.0;
-                } else {
-                    A[(Nx*Ny)*2 + block*Nx + i] = lambda1;
-                    B[(Nx*Ny)*2 + block*Nx + i] = lambda2;
-                }
-            
-                if (i == 0 || i == Nx-1) {
-                    A[(Nx*Ny)*0 + block*Nx + i] = 1-2*lambda1;
-                    B[(Nx*Ny)*0 + block*Nx + i] = 1-2*lambda2;
+    #pragma omp parallel
+    {
+        #pragma omp for collapse(2)
+            for (int block = 0; block < Ny; ++block) {
+                for (int i = 0; i < Nx; ++i) {
                     
-                } else {
-                    A[(Nx*Ny)*0 + block*Nx + i] = 1-3*lambda1;
-                    B[(Nx*Ny)*0 + block*Nx + i] = 1-3*lambda2;
+                    if (i == Nx-1) {
+                        A[(Nx*Ny)*1 + block*Nx + i] = 0.0;
+                        B[(Nx*Ny)*1 + block*Nx + i] = 0.0;
+                    } else {
+                        A[(Nx*Ny)*1 + block*Nx + i] = lambda1;
+                        B[(Nx*Ny)*1 + block*Nx + i] = lambda2;
+                    }
+
+                    if (block == 0 || block == Ny-1) {
+
+                        if (block == Ny-1) {
+                            A[(Nx*Ny)*2 + block*Nx + i] = 0.0;
+                            B[(Nx*Ny)*2 + block*Nx + i] = 0.0;
+                        } else {
+                            A[(Nx*Ny)*2 + block*Nx + i] = lambda1;
+                            B[(Nx*Ny)*2 + block*Nx + i] = lambda2;
+                        }
+                    
+                        if (i == 0 || i == Nx-1) {
+                            A[(Nx*Ny)*0 + block*Nx + i] = 1-2*lambda1;
+                            B[(Nx*Ny)*0 + block*Nx + i] = 1-2*lambda2;
+                            
+                        } else {
+                            A[(Nx*Ny)*0 + block*Nx + i] = 1-3*lambda1;
+                            B[(Nx*Ny)*0 + block*Nx + i] = 1-3*lambda2;
+                        }
+
+                    } else {
+
+                        A[(Nx*Ny)*2 + block*Nx + i] = lambda1;
+                        B[(Nx*Ny)*2 + block*Nx + i] = lambda2;
+                        
+                        if (i == 0 || i == Nx-1) {
+                            A[(Nx*Ny)*0 + block*Nx + i] = 1-3*lambda1;
+                            B[(Nx*Ny)*0 + block*Nx + i] = 1-3*lambda2;
+                        } else {
+                            A[(Nx*Ny)*0 + block*Nx + i] = 1-4*lambda1;
+                            B[(Nx*Ny)*0 + block*Nx + i] = 1-4*lambda2;
+                        }
+
+                    }
                 }
-
-            } else {
-
-                A[(Nx*Ny)*2 + block*Nx + i] = lambda1;
-                B[(Nx*Ny)*2 + block*Nx + i] = lambda2;
-                
-                if (i == 0 || i == Nx-1) {
-                    A[(Nx*Ny)*0 + block*Nx + i] = 1-3*lambda1;
-                    B[(Nx*Ny)*0 + block*Nx + i] = 1-3*lambda2;
-                } else {
-                    A[(Nx*Ny)*0 + block*Nx + i] = 1-4*lambda1;
-                    B[(Nx*Ny)*0 + block*Nx + i] = 1-4*lambda2;
-                }
-
             }
-        }
     }
 }
