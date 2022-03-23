@@ -32,8 +32,8 @@ void ReactionDiffusion::SetParameters(double dt, double T, int Nx, int Ny, doubl
     lambda1 = mu1*dt/(h*h);
     lambda2 = mu2*dt/(h*h);
 
-    A = new double[(Nx+1)*(Nx*Ny)]();
-    B = new double[(Nx+1)*(Nx*Ny)]();
+    A = new double[(3)*(Nx*Ny)]();
+    B = new double[(3)*(Nx*Ny)]();
 
     u = new double[Nx*Ny];
     v = new double[Nx*Ny];
