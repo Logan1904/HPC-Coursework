@@ -24,7 +24,8 @@ The parallelisation is implemented using OpenMPI, running up to a maximum of 64 
 
 Clone the repository to your local machine.
 
-Run `make`
+Run `make`, then `make clean` to remove unneccesary object files
+
 Run `./main --np (number of cores) --dt (time-step) --T (final time) --Nx (x-domain size) --Ny (y-domain size) --a (a parameter) --b (b parameter) --mu1 (mu1 parameter) --mu2 (mu2 parameter) --eps (eps parameter)`
 
 The time-step is recommended to be set at 0.001
@@ -36,20 +37,32 @@ The output data is stored in a textfile called _output.txt_.
 The format of the output data is as follows:
 
 x0 y0 u v
+
 x1 y0 u v
+
 ...
+
 xNx y0 u v
+
 x0 y1 u v
+
 x1 y1 u v
+
 ...
+
 xNx y1 u v
+
 x0 y2 u v
+
 ...
 
 ## Example
 
 Parameters
 
-| **Parameter** | Nx  | Ny  | a    | b    | eps  | mu1 | mu2 |
-|---------------|-----|-----|------|------|------|-----|-----|
-| **Value**     | 101 | 101 | 0.75 | 0.06 | 50.0 | 5.0 | 0.0 |
+| **Parameter** | Nx  | Ny  | a    | b    | eps  | mu1 | mu2 | dt    |
+|---------------|-----|-----|------|------|------|-----|-----|-------|
+| **Value**     | 101 | 101 | 0.75 | 0.06 | 50.0 | 5.0 | 0.0 | 0.001 |
+
+![image](Images/Test1fig.png)
+![image](Images/Test2fig.png)
