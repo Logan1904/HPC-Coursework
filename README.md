@@ -58,11 +58,16 @@ x0 y2 u v
 
 ## Example
 
-Parameters
+The following parameters were used in this example
 
-| **Parameter** | Nx  | Ny  | a    | b    | eps  | mu1 | mu2 | dt    |
-|---------------|-----|-----|------|------|------|-----|-----|-------|
-| **Value**     | 101 | 101 | 0.75 | 0.06 | 50.0 | 5.0 | 0.0 | 0.001 |
+| **Parameter** | dt    | Ny  | a    | b    | mu1 | mu2 | Nx  |
+|---------------|-------|-----|------|------|-----|-----|-----|
+| **Value**     | 0.001 | 101 | 0.75 | 0.06 | 5.0 | 0.0 | 101 |
 
+Illustrative solutions for u at time T=100
+
+**eps=50**
 ![image](Images/Test1fig.png)
+
+**eps=13**
 ![image](Images/Test2fig.png)
