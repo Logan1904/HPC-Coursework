@@ -18,4 +18,4 @@ The initial conditions are given by:
 
 The time-step for the evolution of the system is set at <img src="https://latex.codecogs.com/svg.image?\Delta&space;t&space;=&space;0.001&space;" title="https://latex.codecogs.com/svg.image?\Delta t = 0.001 " />
 
-The mesh discretisation is set at <img src="https://latex.codecogs.com/svg.image?dx&space;=&space;dy&space;=&space;1" title="https://latex.codecogs.com/svg.image?dx = dy = 1" />
+The mesh discretisation is set at  <img src="https://latex.codecogs.com/svg.image?dx&space;=&space;dy&space;=&space;1" title="https://latex.codecogs.com/svg.image?dx = dy = 1" />
