@@ -67,7 +67,9 @@ The following parameters were used in this example
 Illustrative solutions for u at time T=100
 
 **eps=50**
+
 ![image](Images/Test1fig.png)
 
 **eps=13**
+
 ![image](Images/Test2fig.png)
