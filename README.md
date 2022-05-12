@@ -20,56 +20,54 @@ The mesh discretisation is set at  <img src="https://latex.codecogs.com/svg.imag
 
 The parallelisation is implemented using OpenMPI, running up to a maximum of 64 cores.
 
-## Usage
+## Installation
 
 Clone the repository to your local machine.
 
-Run `make`, then `make clean` to remove unneccesary object files
+The time-step parameter `dt` is recommended to be set at 0.001.
+```
+// Make executable file using Makefile
+make
 
-Run `./main --np (number of cores) --dt (time-step) --T (final time) --Nx (x-domain size) --Ny (y-domain size) --a (a parameter) --b (b parameter) --mu1 (mu1 parameter) --mu2 (mu2 parameter) --eps (eps parameter)`
+// Clean unneccesary object files
+make clean
 
-The time-step is recommended to be set at 0.001
+// Run executable with command-line parameters
+./main --np (number of cores) --dt (time-step) --T (final time) --Nx (x-domain size) --Ny (y-domain size) --a (a parameter) --b (b parameter) --mu1 (mu1 parameter) --mu2 (mu2 parameter) --eps (eps parameter)
+```
 
 ## Output
 
-The output data is stored in a textfile called _output.txt_.
+The output data is stored in a textfile "_output.txt_".
 
 The format of the output data is as follows:
 
+```
 x0 y0 u v
-
 x1 y0 u v
-
 ...
-
 xNx y0 u v
-
 x0 y1 u v
-
 x1 y1 u v
-
 ...
-
 xNx y1 u v
-
 x0 y2 u v
-
+x1 y2 u v
 ...
-
+...
+...
+xNx yNy u v
+```
 ## Example
 
 The following parameters were used in this example
 
-| **Parameter** | dt    | Ny  | a    | b    | mu1 | mu2 | Nx  |
-|---------------|-------|-----|------|------|-----|-----|-----|
-| **Value**     | 0.001 | 101 | 0.75 | 0.06 | 5.0 | 0.0 | 101 |
+| **Parameter** | dt    | T  | Nx  | Ny  |  a   |  b   | mu1 | mu2 | Nx  |  T  |
+|---------------|-------|----|-----|-----|------|------|-----|-----|-----|-----|
+| **Value**     | 0.001 | 10 | 101 | 101 | 0.75 | 0.06 | 5.0 | 0.0 | 101 | 100 |
 
-Illustrative solutions for u at time T=100
+The figures below illustrate the solution **u**:
 
-**eps=50**
-
-![image](Images/Test1fig.png)
-
-**eps=13**
-
-![image](Images/Test2fig.png)
+**eps=50**                 |  **eps=13**
+:-------------------------:|:-------------------------:
+![](Images/Test1fig.png)   |  ![](Images/Test2fig.png)
